@@ -1,5 +1,6 @@
 ﻿using CAFU.Core.Data.Entity;
 using UnityEngine;
+// ReSharper disable ArrangeAccessorOwnerBody
 
 #pragma warning disable 649
 

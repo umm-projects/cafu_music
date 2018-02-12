@@ -2,6 +2,7 @@
 using CAFU.Music.Domain.Component;
 using CAFU.Music.Domain.Model;
 using CAFU.Music.Domain.Repository;
+using Zenject;
 
 // ReSharper disable UnusedMember.Global
 
@@ -39,14 +40,15 @@ namespace CAFU.Music.Domain.UseCase {
                 base.Initialize(instance);
                 instance.MusicModel = new MusicModel.Factory().Create();
                 instance.MusicRepository = new MusicRepository<TEnum>.Factory().Create();
-                // タイミング的にココで注入しないと ReactiveProperty の Subscribe が間に合わない
-                MusicPlayer.Install(instance.MusicModel);
+                instance.Initialize();
             }
 
         }
 
+        [Inject]
         private IMusicModel MusicModel { get; set; }
 
+        [Inject]
         private IMusicRepository<TEnum> MusicRepository { get; set; }
 
         public void Play(TEnum key, bool loop = true, bool keepIfSame = true) {
@@ -68,6 +70,12 @@ namespace CAFU.Music.Domain.UseCase {
 
         public void Resume() {
             this.MusicModel.MusicPlayer.Resume();
+        }
+
+        [Inject]
+        private void Initialize() {
+            // タイミング的にココで注入しないと ReactiveProperty の Subscribe が間に合わない
+            MusicPlayer.Install(this.MusicModel);
         }
 
     }

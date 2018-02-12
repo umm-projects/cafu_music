@@ -1,11 +1,14 @@
 ﻿using CAFU.Music.Domain.UseCase;
 using CAFU.Core.Presentation.Presenter;
+using Zenject;
+
 // ReSharper disable UnusedMember.Global
 
 namespace Assets.Scripts.CAFU.Music.Presentation.Presenter {
 
     public interface IMusicPresenter<in TEnum> : IPresenter where TEnum : struct {
 
+        [Inject]
         IMusicUseCase<TEnum> MusicUseCase { get; }
 
     }

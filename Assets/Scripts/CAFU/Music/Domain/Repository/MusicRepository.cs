@@ -2,6 +2,7 @@
 using CAFU.Core.Domain.Repository;
 using CAFU.Music.Data.DataStore;
 using UnityEngine;
+using Zenject;
 
 namespace CAFU.Music.Domain.Repository {
 
@@ -24,6 +25,7 @@ namespace CAFU.Music.Domain.Repository {
 
         }
 
+        [Inject]
         private IMusicDataStore<TEnum> MusicDataStore { get; set; }
 
         public AudioClip GetAudioClip(TEnum key) {

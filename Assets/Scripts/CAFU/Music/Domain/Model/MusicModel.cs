@@ -2,6 +2,7 @@
 using CAFU.Core.Domain.Model;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace CAFU.Music.Domain.Model {
 
@@ -19,7 +20,7 @@ namespace CAFU.Music.Domain.Model {
 
             protected override void Initialize(MusicModel instance) {
                 base.Initialize(instance);
-                instance.AudioClip = new ReactiveProperty<AudioClip>();
+                instance.Initialize();
             }
 
         }
@@ -27,6 +28,11 @@ namespace CAFU.Music.Domain.Model {
         public ReactiveProperty<AudioClip> AudioClip { get; private set; }
 
         public IMusicPlayer MusicPlayer { get; set; }
+
+        [Inject]
+        private void Initialize() {
+            this.AudioClip = new ReactiveProperty<AudioClip>();
+        }
 
     }
 
